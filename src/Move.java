@@ -10,8 +10,6 @@ public class Move {
         this.isAttack = isAttack;
     }
 
-
-
     public int getX() {
         return x;
     }
@@ -36,7 +34,16 @@ public class Move {
         isAttack = attack;
     }
 
+    public static boolean isValidMove(int x, int y) {
+        return x <= 7 && y <= 7 && x >= 0 && y >= 0;
+    }
+
+    public boolean isValidMove() {
+        return x <= 7 && y <= 7 && x >= 0 && y >= 0;
+    }
+
     public String toString() {
         return "(" + x +", " +  y + ")";
     }
+
 }

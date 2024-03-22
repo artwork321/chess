@@ -4,8 +4,8 @@ public class Pawn extends Piece{
 
     private boolean isFirstMove;
 
-    public Pawn(int x, int y) {
-        super(x, y);
+    public Pawn(int x, int y, String colour) {
+        super(x, y, colour, "pawn");
         this.isFirstMove = true;
     }
 
@@ -17,12 +17,13 @@ public class Pawn extends Piece{
     @Override
     public boolean move(Board board, Move move) {
         if(super.move(board, move)) {
-            isFirstMove = false;
+            if (isFirstMove) isFirstMove = false;
             return true;
         }
 
         return false;
     }
+
 
     /**
         Find all available moves and update the allMove arraylist
@@ -32,20 +33,27 @@ public class Pawn extends Piece{
         ArrayList<Move> possibleMoves = new ArrayList<>();
 
         // Normal move
-        if (isFirstMove && !board.getSquares()[super.getY() + 2][super.getY()].isOccupied()) {
-            possibleMoves.add(new Move(super.getX(), super.getY() + 2,  false));
+        int newX = super.getX();
+        int newY = super.getY() + getDirection();
+        int newY2 = newY + getDirection();
+
+        if (isFirstMove && Move.isValidMove(newX, newY2) && !board.getSquares()[newY2][newX].isOccupied()) {
+            possibleMoves.add(new Move(newX, newY2, false));
         }
-        if (!board.getSquares()[getY() + 1][getX()].isOccupied())
-            possibleMoves.add(new Move(super.getX(), super.getY() + 1,  false));
 
-        // Capture
-        if (getY() + 1 < 8 && getX() + 1 < 8 && board.getSquares()[getY() + 1][getX()].isOccupied())
-            possibleMoves.add(new Move(super.getX() + 1, super.getY() + 1,  true));
+        if (Move.isValidMove(newX, newY) && !board.getSquares()[newY][newX].isOccupied()) {
+            possibleMoves.add(new Move(newX, newY, false));
+        }
 
+        int captureX = super.getX() - getDirection();
+        int captureY = super.getY() + getDirection();
+
+        if (Move.isValidMove(captureX, captureY) &&
+                board.getSquares()[captureY][captureX].isOccupied() &&
+                !board.getSquares()[captureY][captureX].getPiece().getColour().equals(this.getColour())) {
+            possibleMoves.add(new Move(captureX, captureY, true));
+        }
         super.setAllMove(possibleMoves);
     }
 
-    public String toString(){
-        return "Pawn";
-    }
 }

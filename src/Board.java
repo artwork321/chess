@@ -5,14 +5,31 @@ public class Board {
     public Board() {
         this.isFinished = false;
 
+        // Initialise Pawns and Empty squares
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (i == 2)
-                    squares[i][j] = new Square(true, new Pawn(j ,i));
+                if (i == 1)
+                    squares[i][j] = new Square(true, new Pawn(j ,i, "White"));
+                else if (i == 6)
+                    squares[i][j] = new Square(true, new Pawn(j ,i, "Black"));
                 else
                     squares[i][j] = new Square(false);
             }
         }
+
+        // Initialise Knights
+        squares[0][1] = new Square(true, new Knight(1 ,0, "White"));
+        squares[0][6] = new Square(true, new Knight(6 ,0, "White"));
+        squares[7][1] = new Square(true, new Knight(1 ,7, "Black"));
+        squares[7][6] = new Square(true, new Knight(6 ,7, "Black"));
+
+        // Initialise Bishops
+
+        // Initialise Queen
+
+        // Initialise Rocks
+
+        // Initialise King
     }
 
     /**

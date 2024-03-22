@@ -1,8 +1,7 @@
 public class Square {
 
     private boolean isOccupied;
-
-    Piece piece;
+    private Piece piece;
 
     public Square(boolean isOccupied, Piece piece) {
         this.isOccupied = isOccupied;
@@ -13,8 +12,6 @@ public class Square {
         this.isOccupied = isOccupied;
         this.piece = null;
     }
-
-
 
     public boolean isOccupied() {
         return isOccupied;
