@@ -1,22 +1,51 @@
 import java.util.*;
 
 public abstract class Piece {
-    private Tile position;
+    private int x;
+    private int y;
     private boolean isKilled;
 
-    private ArrayList<Tile> allMove = new ArrayList<>();
+    private ArrayList<Move> allMove = new ArrayList<>();
 
-    public Piece(Tile position) {
-        this.position = position;
+    public Piece(int x, int y) {
+        this.x = x;
+        this.y = y;
         this.isKilled = false;
     }
 
-    public Tile getPosition() {
-        return position;
+    public int getX() {
+        return x;
     }
 
-    public void move(Tile position) {
-        this.position = position;
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public boolean move(Board board, Move move) {
+
+        // Only process valid move
+        if(allMove.contains(move)) {
+            this.x = move.getX();
+            this.y = move.getY();
+
+            // Capture another piece
+            if(move.isAttack()) {
+                board.getSquares()[x][y].getPiece().setKilled(true);
+            }
+
+            return true;
+        }
+
+        return false;
+
     }
 
     public boolean isKilled() {
@@ -27,9 +56,16 @@ public abstract class Piece {
         isKilled = killed;
     }
 
-    public ArrayList<Tile> getAllMove() {
+    public ArrayList<Move> getAllMove() {
         return allMove;
     }
 
+    public void setAllMove(ArrayList<Move> allMove) {
+        this.allMove = allMove;
+    }
+
+    /**
+        Find all available moves and update allMove arraylist
+     */
     public abstract void findAllNextMove(Board board);
 }
