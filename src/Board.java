@@ -24,6 +24,10 @@ public class Board {
         squares[7][6] = new Square(true, new Knight(6 ,7, "Black"));
 
         // Initialise Bishops
+        squares[0][2] = new Square(true, new Bishop(2 ,0, "White"));
+        squares[0][5] = new Square(true, new Bishop(5 ,0, "White"));
+        squares[7][2] = new Square(true, new Bishop(2 ,7, "Black"));
+        squares[7][5] = new Square(true, new Bishop(5 ,7, "Black"));
 
         // Initialise Queen
 

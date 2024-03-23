@@ -46,7 +46,7 @@ public abstract class Piece {
     }
 
     /**
-     * Make a move
+     * Make a move and return whether the move is processed
      * @param board
      * @param move
      * @return
@@ -54,7 +54,7 @@ public abstract class Piece {
     public boolean move(Board board, Move move) {
 
         // Only process valid move
-        if(allMove.contains(move)) {
+        if(!allMove.isEmpty() && allMove.contains(move)) {
             board.getSquares()[y][x] = new Square(false, null);
 
             this.x = move.getX();
@@ -68,9 +68,7 @@ public abstract class Piece {
 
             return true;
         }
-
         return false;
-
     }
 
     public boolean isKilled() {
