@@ -1,29 +1,19 @@
 public class Move {
 
-    private int x;
-    private int y;
+    private Square destinationSquare;
     private boolean isAttack;
 
-    public Move(int x, int y, boolean isAttack) {
-        this.x = x;
-        this.y = y;
+    public Move(Square destinationSquare, boolean isAttack) {
+        this.destinationSquare = destinationSquare;
         this.isAttack = isAttack;
     }
 
-    public int getX() {
-        return x;
+    public Square getDestinationSquare() {
+        return destinationSquare;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void setDestinationSquare(Square destinationSquare) {
+        this.destinationSquare = destinationSquare;
     }
 
     public boolean isAttack() {
@@ -39,11 +29,12 @@ public class Move {
     }
 
     public boolean isValidMove() {
-        return x <= 7 && y <= 7 && x >= 0 && y >= 0;
+        return destinationSquare.getX() <= 7 && destinationSquare.getY() <= 7
+                && destinationSquare.getX() >= 0 && destinationSquare.getY() >= 0;
     }
 
     public String toString() {
-        return "(" + x +", " +  y + ")";
+        return "(" + destinationSquare.getX() +", " +  destinationSquare.getY() + ")";
     }
 
 }

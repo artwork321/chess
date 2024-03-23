@@ -1,16 +1,30 @@
 public class Square {
 
+    private final int X;
+    private final int Y;
     private boolean isOccupied;
     private Piece piece;
 
-    public Square(boolean isOccupied, Piece piece) {
+    public Square(int x, int y, boolean isOccupied, Piece piece) {
+        this.X = x;
+        this.Y = y;
         this.isOccupied = isOccupied;
         this.piece = piece;
     }
 
-    public Square(boolean isOccupied) {
-        this.isOccupied = isOccupied;
-        this.piece = null;
+    public Square(int x, int y, Piece piece) {
+        this.X = x;
+        this.Y = y;
+        if (piece != null) this.isOccupied = true;
+        this.piece = piece;
+    }
+
+    public int getX() {
+        return X;
+    }
+
+    public int getY() {
+        return Y;
     }
 
     public boolean isOccupied() {
@@ -26,6 +40,9 @@ public class Square {
     }
 
     public void setPiece(Piece piece) {
+        if (piece != null)
+            setOccupied(true);
+
         this.piece = piece;
     }
 }

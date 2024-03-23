@@ -4,8 +4,8 @@ public class Pawn extends Piece{
 
     private boolean isFirstMove;
 
-    public Pawn(int x, int y, String colour) {
-        super(x, y, colour, "pawn");
+    public Pawn(Square currentCoordinate, String colour) {
+        super(currentCoordinate, colour, "pawn");
         this.isFirstMove = true;
     }
 
@@ -33,25 +33,31 @@ public class Pawn extends Piece{
         ArrayList<Move> possibleMoves = new ArrayList<>();
 
         // Normal move
-        int newX = super.getX();
-        int newY = super.getY() + getDirection();
+        int newX = getCurrentCoordinate().getX();
+        int newY = getCurrentCoordinate().getY() + getDirection();
         int newY2 = newY + getDirection();
+        Square destinationSquare = board.getSquares()[newY][newX];
+        Square destinationSquare2 = board.getSquares()[newY2][newX];
 
-        if (isFirstMove && Move.isValidMove(newX, newY2) && !board.getSquares()[newY2][newX].isOccupied()) {
-            possibleMoves.add(new Move(newX, newY2, false));
+
+
+        if (isFirstMove && Move.isValidMove(newX, newY2) && !destinationSquare2.isOccupied()) {
+            possibleMoves.add(new Move(destinationSquare2, false));
         }
 
-        if (Move.isValidMove(newX, newY) && !board.getSquares()[newY][newX].isOccupied()) {
-            possibleMoves.add(new Move(newX, newY, false));
+        if (Move.isValidMove(newX, newY) && !destinationSquare.isOccupied()) {
+            possibleMoves.add(new Move(destinationSquare, false));
         }
 
-        int captureX = super.getX() - getDirection();
-        int captureY = super.getY() + getDirection();
+        // Capture move
+        int captureX = getCurrentCoordinate().getX() - getDirection();
+        int captureY = getCurrentCoordinate().getY() + getDirection();
+        Square destinationSquare3 = board.getSquares()[captureY][captureX];
 
         if (Move.isValidMove(captureX, captureY) &&
-                board.getSquares()[captureY][captureX].isOccupied() &&
-                !board.getSquares()[captureY][captureX].getPiece().getColour().equals(this.getColour())) {
-            possibleMoves.add(new Move(captureX, captureY, true));
+                destinationSquare3.isOccupied() &&
+                !destinationSquare3.getPiece().getColour().equals(this.getColour())) {
+            possibleMoves.add(new Move(destinationSquare3, true));
         }
         super.setAllMove(possibleMoves);
     }

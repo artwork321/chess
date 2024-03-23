@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Knight extends Piece{
-    public Knight(int x, int y, String colour) {
-        super(x, y, colour, "knight");
+    public Knight(Square currentCoordinate, String colour) {
+        super(currentCoordinate, colour, "knight");
     }
 
     @Override
@@ -13,22 +13,28 @@ public class Knight extends Piece{
         for (int i = 1; i <= 2; i++) {
             for (int j = 1; j <= 2; j++) {
                 if(j != i) {
-                    possibleMoves.add(new Move(getX() + i, getY() + j, false));
-                    possibleMoves.add(new Move(getX() - i, getY() - j, false));
-                    possibleMoves.add(new Move(getX() - i, getY() + j, false));
-                    possibleMoves.add(new Move(getX() + i, getY() - j, false));
+                    int currentX = getCurrentCoordinate().getX();
+                    int currentY = getCurrentCoordinate().getY();
+                    if (Move.isValidMove(currentX + j, currentY + i))
+                        possibleMoves.add(new Move(board.getSquares()[currentY + i][currentX + j], false));
+                    if (Move.isValidMove(currentX - j, currentY - i))
+                        possibleMoves.add(new Move(board.getSquares()[currentY - i][currentX - j], false));
+                    if (Move.isValidMove(currentX + j, currentY - i))
+                        possibleMoves.add(new Move(board.getSquares()[currentY - i][currentX + j], false));
+                    if (Move.isValidMove(currentX - j, currentY + i))
+                        possibleMoves.add(new Move(board.getSquares()[currentY + i][currentX - j], false));
                 }
             }
         }
 
         // Remove invalid moves
         possibleMoves.removeIf(move -> !move.isValidMove() ||
-                (board.getSquares()[move.getY()][move.getX()].isOccupied() &&
-                        board.getSquares()[move.getY()][move.getX()].getPiece().getColour().equals(this.getColour())));
+                (move.getDestinationSquare().isOccupied() &&
+                        move.getDestinationSquare().getPiece().getColour().equals(this.getColour())));
 
         // Set whether a move results in an attack
         possibleMoves.forEach(move -> {
-            boolean isAttack = board.getSquares()[move.getY()][move.getX()].isOccupied();
+            boolean isAttack = move.getDestinationSquare().isOccupied();
             move.setAttack(isAttack);
         });
 

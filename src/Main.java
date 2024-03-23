@@ -15,6 +15,7 @@ public class Main {
             scanner.nextLine();
 
             board.getSquares()[y][x].getPiece().findAllNextMove(board);
+            System.out.println(board.getSquares()[y][x].getPiece());
             System.out.println(board.getSquares()[y][x].getPiece().getAllMove());
 
             System.out.println("Choose move");

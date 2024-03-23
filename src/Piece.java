@@ -3,18 +3,15 @@ import java.util.*;
 public abstract class Piece {
 
     private final String pieceType;
-
     private final int direction;
     private final String colour;
-    private int x;
-    private int y;
+    private Square currentCoordinate;
     private boolean isKilled;
 
     private ArrayList<Move> allMove = new ArrayList<>();
 
-    public Piece(int x, int y, String colour, String pieceType) {
-        this.x = x;
-        this.y = y;
+    public Piece(Square currentCoordinate, String colour, String pieceType) {
+        this.currentCoordinate = currentCoordinate;
         this.colour = colour;
         this.isKilled = false;
         this.direction = (colour.equals("Black")) ? -1 : 1;
@@ -25,20 +22,12 @@ public abstract class Piece {
         return direction;
     }
 
-    public int getX() {
-        return x;
+    public Square getCurrentCoordinate() {
+        return currentCoordinate;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void setCurrentCoordinate(Square newCoordinate) {
+        this.currentCoordinate = newCoordinate;
     }
 
     public String getColour() {
@@ -55,16 +44,18 @@ public abstract class Piece {
 
         // Only process valid move
         if(!allMove.isEmpty() && allMove.contains(move)) {
-            board.getSquares()[y][x] = new Square(false, null);
+            board.getSquare(currentCoordinate).setPiece(null); // Remove piece from old square
+            board.getSquare(currentCoordinate).setOccupied(false);
 
-            this.x = move.getX();
-            this.y = move.getY();
+            this.currentCoordinate = move.getDestinationSquare();
 
             // Capture another piece
             if(move.isAttack()) {
-                board.getSquares()[y][x].getPiece().setKilled(true);
+                // Kill the piece which is current on that square
+                board.getSquare(currentCoordinate).getPiece().setKilled(true);
             }
-            board.getSquares()[y][x] = new Square(true, this);
+            currentCoordinate.setPiece(this);
+            currentCoordinate.setOccupied(true);
 
             return true;
         }

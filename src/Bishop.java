@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Bishop extends Piece{
     private final int[][] DIRECTION = {{1,-1}, {1,1}, {-1, 1}, {-1, -1}};
-    public Bishop(int x, int y, String colour) {
-        super(x, y, colour, "bishop");
+    public Bishop(Square currentCoordinate, String colour) {
+        super(currentCoordinate, colour, "bishop");
     }
 
 
@@ -13,8 +13,8 @@ public class Bishop extends Piece{
 
         // Find the last square that a bishop can go
         for (int[] di : DIRECTION) {
-            int newX = getX();
-            int newY = getY();
+            int newX = getCurrentCoordinate().getX();
+            int newY = getCurrentCoordinate().getY();
 
             while (Move.isValidMove(newX, newY)) { // Go through all directions
                 newX += di[0];
@@ -25,12 +25,12 @@ public class Bishop extends Piece{
 
                     // Normal move
                     if (!stepSquare.isOccupied()) {
-                        possibleMoves.add(new Move(newX, newY, false));
+                        possibleMoves.add(new Move(stepSquare, false));
                     }
                     // Attack move
                     else {
-                        if (!board.getSquares()[newY][newX].getPiece().getColour().equals(this.getColour())) {
-                            possibleMoves.add(new Move(newX, newY, true));
+                        if (!stepSquare.getPiece().getColour().equals(this.getColour())) {
+                            possibleMoves.add(new Move(stepSquare, true));
                         }
                         break;
                     }
