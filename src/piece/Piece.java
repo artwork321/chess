@@ -49,6 +49,10 @@ public abstract class Piece {
         this.allMove = allMove;
     }
 
+    public String getPieceType() {
+        return pieceType;
+    }
+
     /**
         Find all available moves and update allMove arraylist
      */
