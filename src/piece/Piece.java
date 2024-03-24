@@ -33,34 +33,6 @@ public abstract class Piece {
         return this.colour;
     }
 
-    /**
-     * Make a move and return whether the move is processed
-     * @return true if a move is successfully processed
-     */
-    public boolean move(Board board, Move move) {
-
-        // Only process valid move
-        if(!allMove.isEmpty() && allMove.contains(move)) {
-            board.getSquare(currentCoordinate).setPiece(null); // Remove piece from old square
-            board.getSquare(currentCoordinate).setOccupied(false);
-
-            this.currentCoordinate = move.getDestinationSquare();
-
-            // Capture another piece
-            if(move.isAttack()) {
-                // Kill the piece which is current on that square
-                board.getSquare(currentCoordinate).getPiece().setKilled(true);
-                board.getAlivePiece().remove(board.getSquare(currentCoordinate).getPiece());
-                board.getEliminatePiece().add(board.getSquare(currentCoordinate).getPiece());
-            }
-            currentCoordinate.setPiece(this);
-            currentCoordinate.setOccupied(true);
-
-            return true;
-        }
-        return false;
-    }
-
     public boolean isKilled() {
         return isKilled;
     }

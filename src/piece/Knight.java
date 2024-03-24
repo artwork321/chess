@@ -1,6 +1,7 @@
 package piece;
 
 import board.Board;
+import board.Move;
 import board.Square;
 import java.util.ArrayList;
 
@@ -20,13 +21,13 @@ public class Knight extends Piece{
                     int currentX = getCurrentCoordinate().getX();
                     int currentY = getCurrentCoordinate().getY();
                     if (Square.isValidSquare(currentX + j, currentY + i))
-                        possibleMoves.add(new Move(board.getSquares()[currentY + i][currentX + j], false));
+                        possibleMoves.add(new Move(this, board.getSquares()[currentY + i][currentX + j], false));
                     if (Square.isValidSquare(currentX - j, currentY - i))
-                        possibleMoves.add(new Move(board.getSquares()[currentY - i][currentX - j], false));
+                        possibleMoves.add(new Move(this, board.getSquares()[currentY - i][currentX - j], false));
                     if (Square.isValidSquare(currentX + j, currentY - i))
-                        possibleMoves.add(new Move(board.getSquares()[currentY - i][currentX + j], false));
+                        possibleMoves.add(new Move(this, board.getSquares()[currentY - i][currentX + j], false));
                     if (Square.isValidSquare(currentX - j, currentY + i))
-                        possibleMoves.add(new Move(board.getSquares()[currentY + i][currentX - j], false));
+                        possibleMoves.add(new Move(this, board.getSquares()[currentY + i][currentX - j], false));
                 }
             }
         }

@@ -54,6 +54,14 @@ public class Board {
         initializePiece("King", kingRows, kingCols, MonarchColor);
     }
 
+    public void setIsFinished(boolean isFinished) {
+        this.isFinished = isFinished;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
     /**
      * Create Pawns on their initialised position
      */
@@ -94,6 +102,28 @@ public class Board {
         return alivePiece;
     }
 
+    public ArrayList<Piece> getAliveWhitePiece() {
+        ArrayList<Piece> whitePiece = new ArrayList<>();
+
+        for (Piece piece: alivePiece) {
+            if(piece.getColour().equals("White")) {
+                whitePiece.add(piece);
+            }
+        }
+        return whitePiece;
+    }
+
+    public ArrayList<Piece> getAliveBlackPiece() {
+        ArrayList<Piece> blackPiece = new ArrayList<>();
+
+        for (Piece piece: alivePiece) {
+            if(piece.getColour().equals("Black")) {
+                blackPiece.add(piece);
+            }
+        }
+        return blackPiece;
+    }
+
     public ArrayList<Piece> getEliminatePiece() {
         return eliminatePiece;
     }
@@ -113,15 +143,28 @@ public class Board {
      * Return the board game and pieces in the form of text
      */
     public String toString() {
-        StringBuilder textBoard = new StringBuilder("|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |\n|");
+        StringBuilder line = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            line.append("-----");
+        }
+        line.append("\n");
+
+        StringBuilder textBoard = new StringBuilder("|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |\n");
+        textBoard.append(line);
+
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                textBoard.append(squares[i][j].getPiece()).append("|");
+                if (j == 0) {
+                    textBoard.append("|");
+                }
+
+                if (squares[i][j].getPiece() == null) {
+                    textBoard.append("    ").append("|");
+                }
+                else textBoard.append(squares[i][j].getPiece()).append("|");
             }
-            if (i != 7)
-                textBoard.append(" ").append(i).append("\n|");
-            else
-                textBoard.append(" ").append(i).append("\n");
+            textBoard.append(" ").append(i).append("\n");
+            textBoard.append(line);
         }
 
         return textBoard.toString();

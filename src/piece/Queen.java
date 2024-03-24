@@ -1,6 +1,7 @@
 package piece;
 
 import board.Board;
+import board.Move;
 import board.Square;
 import java.util.ArrayList;
 
@@ -37,12 +38,12 @@ public class Queen extends Piece{
 
                     // Normal move
                     if (!stepSquare.isOccupied()) {
-                        possibleMoves.add(new Move(stepSquare, false));
+                        possibleMoves.add(new Move(this, stepSquare, false));
                     }
                     // Attack move
                     else {
                         if (!stepSquare.getPiece().getColour().equals(this.getColour())) {
-                            possibleMoves.add(new Move(stepSquare, true));
+                            possibleMoves.add(new Move(this, stepSquare, true));
                         }
                         break;
                     }
