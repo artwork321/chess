@@ -4,13 +4,21 @@ import board.Board;
 import board.Square;
 import java.util.ArrayList;
 
+/**
+ * Rooks of chess game
+ */
 public class Rook extends Piece {
 
     private final int[][] DIRECTION = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+
     public Rook(Square currentCoordinate, String colour) {
         super(currentCoordinate, colour, "rook");
     }
 
+    /**
+     * Find add next move of a rook
+     * @param board contains all squares that can be considered to be the next move
+     */
     @Override
     public void findAllNextMove(Board board) {
         ArrayList<Move> possibleMoves = new ArrayList<>();
@@ -20,11 +28,11 @@ public class Rook extends Piece {
             int newX = getCurrentCoordinate().getX();
             int newY = getCurrentCoordinate().getY();
 
-            while (Move.isValidMove(newX, newY)) { // Go through all directions
+            while (Square.isValidSquare(newX, newY)) { // Go through all directions
                 newX += di[0];
                 newY += di[1];
 
-                if (Move.isValidMove(newX, newY)) {
+                if (Square.isValidSquare(newX, newY)) {
                     Square stepSquare = board.getSquares()[newY][newX];
 
                     // Normal move

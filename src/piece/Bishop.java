@@ -20,11 +20,11 @@ public class Bishop extends Piece{
             int newX = getCurrentCoordinate().getX();
             int newY = getCurrentCoordinate().getY();
 
-            while (Move.isValidMove(newX, newY)) { // Go through all directions
+            while (Square.isValidSquare(newX, newY)) { // Go through all directions
                 newX += di[0];
                 newY += di[1];
 
-                if (Move.isValidMove(newX, newY)) {
+                if (Square.isValidSquare(newX, newY)) {
                     Square stepSquare = board.getSquares()[newY][newX];
 
                     // Normal move

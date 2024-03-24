@@ -3,13 +3,15 @@ package piece;
 import board.*;
 import java.util.*;
 
+/**
+ * General properties of any piece in chess
+ */
 public abstract class Piece {
 
     private final String pieceType;
     private final String colour;
     private Square currentCoordinate;
     private boolean isKilled;
-
     private ArrayList<Move> allMove = new ArrayList<>();
 
     public Piece(Square currentCoordinate, String colour, String pieceType) {
@@ -33,9 +35,7 @@ public abstract class Piece {
 
     /**
      * Make a move and return whether the move is processed
-     * @param board
-     * @param move
-     * @return
+     * @return true if a move is successfully processed
      */
     public boolean move(Board board, Move move) {
 

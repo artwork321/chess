@@ -1,6 +1,9 @@
 package board;
 import piece.*;
 
+/**
+ * Represent a square of a chess board
+ */
 public class Square {
 
     private final int X;
@@ -47,5 +50,12 @@ public class Square {
             setOccupied(true);
 
         this.piece = piece;
+    }
+
+    /**
+     * Return true if a square is within the board
+     */
+    public static boolean isValidSquare(int x, int y) {
+        return x <= 7 && y <= 7 && x >= 0 && y >= 0;
     }
 }

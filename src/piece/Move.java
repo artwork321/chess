@@ -1,6 +1,9 @@
 package piece;
 import board.Square;
 
+/**
+ * Represent a move in chess game
+ */
 public class Move {
 
     private Square destinationSquare;
@@ -27,10 +30,9 @@ public class Move {
         isAttack = attack;
     }
 
-    public static boolean isValidMove(int x, int y) {
-        return x <= 7 && y <= 7 && x >= 0 && y >= 0;
-    }
-
+    /**
+     * Return true if a move is within the board
+     */
     public boolean isValidMove() {
         return destinationSquare.getX() <= 7 && destinationSquare.getY() <= 7
                 && destinationSquare.getX() >= 0 && destinationSquare.getY() >= 0;

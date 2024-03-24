@@ -4,7 +4,9 @@ import board.Board;
 import board.Square;
 import java.util.ArrayList;
 
-
+/**
+ * A kind of piece of chess game
+ */
 public class Queen extends Piece{
 
     private final int[][] DIRECTION = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, -1}, {1, 1}, {-1, 1}, {-1, -1}};
@@ -13,6 +15,10 @@ public class Queen extends Piece{
         super(currentCoordinate, colour, "Queen");
     }
 
+    /**
+     * Find add next move of a queen
+     *@param board contains all squares that can be considered to be the next move
+     */
     @Override
     public void findAllNextMove(Board board) {
         ArrayList<Move> possibleMoves = new ArrayList<>();
@@ -22,11 +28,11 @@ public class Queen extends Piece{
             int newX = getCurrentCoordinate().getX();
             int newY = getCurrentCoordinate().getY();
 
-            while (Move.isValidMove(newX, newY)) { // Go through all directions
+            while (Square.isValidSquare(newX, newY)) { // Go through all directions
                 newX += di[0];
                 newY += di[1];
 
-                if (Move.isValidMove(newX, newY)) {
+                if (Square.isValidSquare(newX, newY)) {
                     Square stepSquare = board.getSquares()[newY][newX];
 
                     // Normal move

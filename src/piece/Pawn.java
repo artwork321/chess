@@ -3,6 +3,9 @@ package piece;
 import board.*;
 import java.util.ArrayList;
 
+/**
+ * A kind of piece in chess game
+ */
 public class Pawn extends Piece{
 
     private final int DIRECTION;
@@ -44,13 +47,12 @@ public class Pawn extends Piece{
         Square destinationSquare = board.getSquares()[newY][newX];
         Square destinationSquare2 = board.getSquares()[newY2][newX];
 
-
-
-        if (isFirstMove && Move.isValidMove(newX, newY2) && !destinationSquare2.isOccupied()) {
+        // Pawns can go ahead two steps if it is their first move
+        if (isFirstMove && Square.isValidSquare(newX, newY2) && !destinationSquare2.isOccupied()) {
             possibleMoves.add(new Move(destinationSquare2, false));
         }
 
-        if (Move.isValidMove(newX, newY) && !destinationSquare.isOccupied()) {
+        if (Square.isValidSquare(newX, newY) && !destinationSquare.isOccupied()) {
             possibleMoves.add(new Move(destinationSquare, false));
         }
 
@@ -59,7 +61,7 @@ public class Pawn extends Piece{
         int captureY = getCurrentCoordinate().getY() + DIRECTION;
         Square destinationSquare3 = board.getSquares()[captureY][captureX];
 
-        if (Move.isValidMove(captureX, captureY) &&
+        if (Square.isValidSquare(captureX, captureY) &&
                 destinationSquare3.isOccupied() &&
                 !destinationSquare3.getPiece().getColour().equals(this.getColour())) {
             possibleMoves.add(new Move(destinationSquare3, true));

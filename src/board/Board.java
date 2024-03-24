@@ -1,8 +1,11 @@
 package board;
-import piece.*;
 
+import piece.*;
 import java.util.ArrayList;
 
+/**
+ * Represent a chess board
+ */
 public class Board {
     private final Square[][] squares = new Square[8][8];
     private final ArrayList<Piece> alivePiece = new ArrayList<>();
@@ -30,7 +33,6 @@ public class Board {
         int[] knightCols = {1, 6, 1, 6};
         initializePiece("Knight", knightRows, knightCols, NonMonarchColors);
 
-
         // Initialize bishops
         int[] bishopRows = {0, 0, 7, 7};
         int[] bishopCols = {2, 5, 2, 5};
@@ -52,13 +54,24 @@ public class Board {
         initializePiece("King", kingRows, kingCols, MonarchColor);
     }
 
+    /**
+     * Create Pawns on their initialised position
+     */
     private void initializePawns() {
         for (int col = 0; col < 8; col++) {
             squares[1][col].setPiece(new Pawn(squares[1][col], "White"));
             squares[6][col].setPiece(new Pawn(squares[6][col], "Black"));
+            alivePiece.add(squares[1][col].getPiece());
+            alivePiece.add(squares[6][col].getPiece());
         }
     }
 
+    /**
+     * Create other pieces on their initialised position
+     * @param pieceClass indicates kinds of piece
+     * @param rows contains rows for pieces to be initialised
+     * @param cols contains cols for pieces to be initialised
+     */
     private void initializePiece(String pieceClass, int[] rows, int[] cols, String[] colors) {
 
         for (int i = 0; i < rows.length; i++) {
@@ -73,6 +86,7 @@ public class Board {
                 case "King" -> squares[row][col].setPiece(new King(squares[row][col], color));
                 case "Queen" -> squares[row][col].setPiece(new Queen(squares[row][col], color));
             }
+            alivePiece.add(squares[row][col].getPiece());
         }
     }
 
@@ -84,10 +98,6 @@ public class Board {
         return eliminatePiece;
     }
 
-    /**
-     *
-     * @param isFinished
-     */
     public void setFinished(boolean isFinished) {
         this.isFinished = isFinished;
     }
@@ -99,6 +109,9 @@ public class Board {
         return squares[square.getY()][square.getX()];
     }
 
+    /**
+     * Return the board game and pieces in the form of text
+     */
     public String toString() {
         StringBuilder textBoard = new StringBuilder("|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |\n|");
         for (int i = 0; i < 8; i++) {

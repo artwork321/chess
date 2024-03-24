@@ -19,13 +19,13 @@ public class Knight extends Piece{
                 if(j != i) {
                     int currentX = getCurrentCoordinate().getX();
                     int currentY = getCurrentCoordinate().getY();
-                    if (Move.isValidMove(currentX + j, currentY + i))
+                    if (Square.isValidSquare(currentX + j, currentY + i))
                         possibleMoves.add(new Move(board.getSquares()[currentY + i][currentX + j], false));
-                    if (Move.isValidMove(currentX - j, currentY - i))
+                    if (Square.isValidSquare(currentX - j, currentY - i))
                         possibleMoves.add(new Move(board.getSquares()[currentY - i][currentX - j], false));
-                    if (Move.isValidMove(currentX + j, currentY - i))
+                    if (Square.isValidSquare(currentX + j, currentY - i))
                         possibleMoves.add(new Move(board.getSquares()[currentY - i][currentX + j], false));
-                    if (Move.isValidMove(currentX - j, currentY + i))
+                    if (Square.isValidSquare(currentX - j, currentY + i))
                         possibleMoves.add(new Move(board.getSquares()[currentY + i][currentX - j], false));
                 }
             }

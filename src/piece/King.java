@@ -2,10 +2,12 @@ package piece;
 
 import board.Board;
 import board.Square;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * A kind of piece of chess game
+ * If one side has this piece killed, the player will lose
+ */
 public class King extends Piece {
 
     private final int[][] DIRECTION = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, -1}, {1, 1}, {-1, 1}, {-1, -1}};
@@ -13,6 +15,11 @@ public class King extends Piece {
         super(currentCoordinate, colour, "King");
     }
 
+    /**
+     * Indicate if the piece is under attack of another piece
+     * @param alivePiece contains all alive pieces on the board
+     * @return true if it is under attack
+     */
     public boolean isUnderAttack(ArrayList<Piece> alivePiece) {
         Square position = this.getCurrentCoordinate();
         String color = this.getColour();
@@ -31,6 +38,10 @@ public class King extends Piece {
         return false;
     }
 
+    /**
+     * Find add next move of a king
+     *@param board contains all squares that can be considered to be the next move
+     */
     @Override
     public void findAllNextMove(Board board) {
         ArrayList<Move> possibleMoves = new ArrayList<>();
@@ -40,11 +51,11 @@ public class King extends Piece {
             int newX = getCurrentCoordinate().getX();
             int newY = getCurrentCoordinate().getY();
 
-            if (Move.isValidMove(newX, newY)){
+            if (Square.isValidSquare(newX, newY)){
                 newX += di[0];
                 newY += di[1];
 
-                if (Move.isValidMove(newX, newY) && !isUnderAttack(board.getAlivePiece())) {
+                if (Square.isValidSquare(newX, newY) && !isUnderAttack(board.getAlivePiece())) {
                     Square stepSquare = board.getSquares()[newY][newX];
 
                     // Normal move
