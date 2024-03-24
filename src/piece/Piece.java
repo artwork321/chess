@@ -1,9 +1,11 @@
+package piece;
+
+import board.*;
 import java.util.*;
 
 public abstract class Piece {
 
     private final String pieceType;
-    private final int direction;
     private final String colour;
     private Square currentCoordinate;
     private boolean isKilled;
@@ -14,12 +16,7 @@ public abstract class Piece {
         this.currentCoordinate = currentCoordinate;
         this.colour = colour;
         this.isKilled = false;
-        this.direction = (colour.equals("Black")) ? -1 : 1;
         this.pieceType = pieceType;
-    }
-
-    public int getDirection() {
-        return direction;
     }
 
     public Square getCurrentCoordinate() {
@@ -53,6 +50,8 @@ public abstract class Piece {
             if(move.isAttack()) {
                 // Kill the piece which is current on that square
                 board.getSquare(currentCoordinate).getPiece().setKilled(true);
+                board.getAlivePiece().remove(board.getSquare(currentCoordinate).getPiece());
+                board.getEliminatePiece().add(board.getSquare(currentCoordinate).getPiece());
             }
             currentCoordinate.setPiece(this);
             currentCoordinate.setOccupied(true);

@@ -1,12 +1,17 @@
+package piece;
+
+import board.*;
 import java.util.ArrayList;
 
 public class Pawn extends Piece{
 
+    private final int DIRECTION;
     private boolean isFirstMove;
 
     public Pawn(Square currentCoordinate, String colour) {
         super(currentCoordinate, colour, "pawn");
         this.isFirstMove = true;
+        DIRECTION = (colour.equals("Black")) ? -1 : 1;
     }
 
     /**
@@ -34,8 +39,8 @@ public class Pawn extends Piece{
 
         // Normal move
         int newX = getCurrentCoordinate().getX();
-        int newY = getCurrentCoordinate().getY() + getDirection();
-        int newY2 = newY + getDirection();
+        int newY = getCurrentCoordinate().getY() + DIRECTION;
+        int newY2 = newY + DIRECTION;
         Square destinationSquare = board.getSquares()[newY][newX];
         Square destinationSquare2 = board.getSquares()[newY2][newX];
 
@@ -50,8 +55,8 @@ public class Pawn extends Piece{
         }
 
         // Capture move
-        int captureX = getCurrentCoordinate().getX() - getDirection();
-        int captureY = getCurrentCoordinate().getY() + getDirection();
+        int captureX = getCurrentCoordinate().getX() - DIRECTION;
+        int captureY = getCurrentCoordinate().getY() + DIRECTION;
         Square destinationSquare3 = board.getSquares()[captureY][captureX];
 
         if (Move.isValidMove(captureX, captureY) &&

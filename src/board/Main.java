@@ -1,4 +1,7 @@
+package board;
 import java.util.Scanner;
+import board.*;
+import piece.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,17 +17,22 @@ public class Main {
             int y = scanner.nextInt();
             scanner.nextLine();
 
-            board.getSquares()[y][x].getPiece().findAllNextMove(board);
-            System.out.println(board.getSquares()[y][x].getPiece());
-            System.out.println(board.getSquares()[y][x].getPiece().getAllMove());
+            Piece piece = board.getSquares()[y][x].getPiece();
+            if (piece == null) {
+                continue;
+            }
+
+            piece.findAllNextMove(board);
+            System.out.println(piece);
+            System.out.println(piece.getAllMove());
 
             System.out.println("Choose move");
             int i = scanner.nextInt();
             scanner.nextLine();
 
-            if (!board.getSquares()[y][x].getPiece().getAllMove().isEmpty()) {
-                Move nextMove = board.getSquares()[y][x].getPiece().getAllMove().get(i);
-                board.getSquares()[y][x].getPiece().move(board, nextMove);
+            if (!piece.getAllMove().isEmpty()) {
+                Move nextMove = piece.getAllMove().get(i);
+                piece.move(board, nextMove);
             }
 
             System.out.println(board);

@@ -1,3 +1,6 @@
+package piece;
+import board.Square;
+
 public class Move {
 
     private Square destinationSquare;

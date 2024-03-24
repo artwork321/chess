@@ -1,3 +1,7 @@
+package piece;
+
+import board.Board;
+import board.Square;
 import java.util.ArrayList;
 
 public class Knight extends Piece{

@@ -1,3 +1,6 @@
+package board;
+import piece.*;
+
 public class Square {
 
     private final int X;

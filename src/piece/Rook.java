@@ -1,11 +1,15 @@
+package piece;
+
+import board.Board;
+import board.Square;
 import java.util.ArrayList;
 
-public class Bishop extends Piece{
-    private final int[][] DIRECTION = {{1,-1}, {1,1}, {-1, 1}, {-1, -1}};
-    public Bishop(Square currentCoordinate, String colour) {
-        super(currentCoordinate, colour, "bishop");
-    }
+public class Rook extends Piece {
 
+    private final int[][] DIRECTION = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+    public Rook(Square currentCoordinate, String colour) {
+        super(currentCoordinate, colour, "rook");
+    }
 
     @Override
     public void findAllNextMove(Board board) {
