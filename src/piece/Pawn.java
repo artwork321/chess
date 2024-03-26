@@ -14,7 +14,7 @@ public class Pawn extends Piece{
     public Pawn(Square currentCoordinate, String colour) {
         super(currentCoordinate, colour, "pawn");
         this.isFirstMove = true;
-        DIRECTION = (colour.equals("Black")) ? -1 : 1;
+        DIRECTION = (colour.equals("White")) ? -1 : 1;
     }
 
 
@@ -40,6 +40,7 @@ public class Pawn extends Piece{
         }
 
 
+        // Normal move
         if (Square.isValidSquare(newX, newY)) {
             Square destinationSquare = board.getSquares()[newY][newX];
             if (!destinationSquare.isOccupied()) {
@@ -47,16 +48,16 @@ public class Pawn extends Piece{
             }
         }
 
-        // Capture move
-        int captureX = getCurrentCoordinate().getX() - DIRECTION;
+        // Capture moves
+        int[] captureXArray = {getCurrentCoordinate().getX() - DIRECTION, getCurrentCoordinate().getX() + DIRECTION};
         int captureY = getCurrentCoordinate().getY() + DIRECTION;
 
-        if (Square.isValidSquare(captureX, captureY)){
-            Square destinationSquare3 = board.getSquares()[captureY][captureX];
-
-            if (destinationSquare3.isOccupied() &&
-                    !destinationSquare3.getPiece().getColour().equals(this.getColour())) {
-                possibleMoves.add(new Move(this, destinationSquare3, true));
+        for (int captureX : captureXArray) {
+            if (Square.isValidSquare(captureX, captureY)) {
+                Square destinationSquare = board.getSquares()[captureY][captureX];
+                if (destinationSquare.isOccupied() && !destinationSquare.getPiece().sameSide(this)) {
+                    possibleMoves.add(new Move(this, destinationSquare, true));
+                }
             }
         }
 

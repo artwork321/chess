@@ -6,6 +6,8 @@ import board.Square;
 import java.util.ArrayList;
 
 public class Knight extends Piece{
+
+    private final int[][] DIRECTION = {{1, 2}, {2, 1}, {-1, 2}, {2, -1}, {-2, 1}, {1, -2}, {-2, -1}, {-1, -2}};
     public Knight(Square currentCoordinate, String colour) {
         super(currentCoordinate, colour, "knight");
     }
@@ -14,35 +16,32 @@ public class Knight extends Piece{
     public void findAllNextMove(Board board) {
         ArrayList<Move> possibleMoves = new ArrayList<>();
 
-        // Normal and capture moves are the same
-        for (int i = 1; i <= 2; i++) {
-            for (int j = 1; j <= 2; j++) {
-                if(j != i) {
-                    int currentX = getCurrentCoordinate().getX();
-                    int currentY = getCurrentCoordinate().getY();
-                    if (Square.isValidSquare(currentX + j, currentY + i))
-                        possibleMoves.add(new Move(this, board.getSquares()[currentY + i][currentX + j], false));
-                    if (Square.isValidSquare(currentX - j, currentY - i))
-                        possibleMoves.add(new Move(this, board.getSquares()[currentY - i][currentX - j], false));
-                    if (Square.isValidSquare(currentX + j, currentY - i))
-                        possibleMoves.add(new Move(this, board.getSquares()[currentY - i][currentX + j], false));
-                    if (Square.isValidSquare(currentX - j, currentY + i))
-                        possibleMoves.add(new Move(this, board.getSquares()[currentY + i][currentX - j], false));
+        // Find the all squares that a knight can go
+        for (int[] di : DIRECTION) {
+            int newX = getCurrentCoordinate().getX();
+            int newY = getCurrentCoordinate().getY();
+
+            if (Square.isValidSquare(newX, newY)){
+                newX += di[0];
+                newY += di[1];
+
+                if (Square.isValidSquare(newX, newY)) {
+                    Square stepSquare = board.getSquares()[newY][newX];
+
+                    // Normal move
+                    if (!stepSquare.isOccupied()) {
+                        possibleMoves.add(new Move(this, stepSquare, false));
+                    }
+                    // Attack move
+                    else {
+                        if (!stepSquare.getPiece().getColour().equals(this.getColour())) {
+                            possibleMoves.add(new Move(this, stepSquare, true));
+                        }
+                    }
+
                 }
             }
         }
-
-        // Remove invalid moves
-        possibleMoves.removeIf(move -> !move.isValidMove() ||
-                (move.getDestinationSquare().isOccupied() &&
-                        move.getDestinationSquare().getPiece().getColour().equals(this.getColour())));
-
-        // Set whether a move results in an attack
-        possibleMoves.forEach(move -> {
-            boolean isAttack = move.getDestinationSquare().isOccupied();
-            move.setAttack(isAttack);
-        });
-
         super.setAllMove(possibleMoves);
     }
 

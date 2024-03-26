@@ -53,6 +53,13 @@ public abstract class Piece {
         return pieceType;
     }
 
+    public boolean sameSide (Piece piece) {
+        if (piece != null) {
+            return this.colour.equals(piece.getColour());
+        }
+        return false;
+    }
+
     /**
         Find all available moves and update allMove arraylist
      */

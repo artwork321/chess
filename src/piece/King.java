@@ -16,25 +16,18 @@ public class King extends Piece {
         super(currentCoordinate, colour, "King");
     }
 
+    //TODO: decide when king is checkmate
+    public boolean hasEscapeMove(Board board, ArrayList<Piece> alivePiece) {
+        return true;
+    }
+
     /**
      * Indicate if the piece is under attack of another piece
      * @param alivePiece contains all alive pieces on the board
      * @return true if it is under attack
      */
-    public boolean isUnderAttack(ArrayList<Piece> alivePiece) {
-        Square position = this.getCurrentCoordinate();
-        String color = this.getColour();
-
-        for (Piece piece : alivePiece) {
-            if (!piece.getColour().equals(color)) {
-                for(Move move : piece.getAllMove()) {
-                    if (move.getDestinationSquare() == position) {
-                        return true;
-                    }
-                }
-            }
-
-        }
+    public boolean isUnderAttack(ArrayList<Piece> alivePiece, Square position, Board board) {
+        //TODO: check king is in check
 
         return false;
     }
@@ -47,7 +40,7 @@ public class King extends Piece {
     public void findAllNextMove(Board board) {
         ArrayList<Move> possibleMoves = new ArrayList<>();
 
-        // Find the last square that a bishop can go
+        // Find the last square that a king can go
         for (int[] di : DIRECTION) {
             int newX = getCurrentCoordinate().getX();
             int newY = getCurrentCoordinate().getY();
@@ -56,7 +49,8 @@ public class King extends Piece {
                 newX += di[0];
                 newY += di[1];
 
-                if (Square.isValidSquare(newX, newY) && !isUnderAttack(board.getAlivePiece())) {
+                if (Square.isValidSquare(newX, newY) && !isUnderAttack(board.getAlivePiece(),
+                        this.getCurrentCoordinate(), board)) {
                     Square stepSquare = board.getSquares()[newY][newX];
 
                     // Normal move

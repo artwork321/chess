@@ -11,6 +11,7 @@ public class Square {
     private boolean isOccupied;
     private Piece piece;
 
+
     public Square(int x, int y, boolean isOccupied, Piece piece) {
         this.X = x;
         this.Y = y;

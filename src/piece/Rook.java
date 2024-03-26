@@ -24,7 +24,7 @@ public class Rook extends Piece {
     public void findAllNextMove(Board board) {
         ArrayList<Move> possibleMoves = new ArrayList<>();
 
-        // Find the last square that a bishop can go
+        // Find the last square that a rook can go
         for (int[] di : DIRECTION) {
             int newX = getCurrentCoordinate().getX();
             int newY = getCurrentCoordinate().getY();

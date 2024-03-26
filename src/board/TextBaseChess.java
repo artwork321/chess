@@ -11,7 +11,7 @@ public class TextBaseChess {
     private final Board board;
 
     public TextBaseChess() {
-        board = new Board();
+        board = new Board("WHITE");
         whitePlayer = new WhitePlayer(board);
         blackPlayer = new BlackPlayer(board);
         currentPlayer = whitePlayer;
@@ -39,7 +39,7 @@ public class TextBaseChess {
 
     public void checkCheckMate() {
         if(blackPlayer.isInCheck()) System.out.println("Black King is checked");
-        if(whitePlayer.isInCheck()) System.out.println("Black King is checked");
+        if(whitePlayer.isInCheck()) System.out.println("White King is checked");
     }
 
     public boolean executeMove(Piece piece) {
@@ -73,7 +73,7 @@ public class TextBaseChess {
         showBoard();
         System.out.format("Current player: %s\n", currentPlayer.getClass());
 
-        while(!board.isFinished()) {
+        while(currentPlayer.isLose()) {
 
             currentPlayer.findAllLegalMove();
 

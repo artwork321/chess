@@ -15,4 +15,9 @@ public class WhitePlayer extends Player {
     public ArrayList<Piece> getAlivePiece() {
         return board.getAliveWhitePiece();
     }
+
+    @Override
+    public String toString() {
+        return "White Player";
+    }
 }

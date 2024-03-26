@@ -7,26 +7,38 @@ import java.util.ArrayList;
  * Represent a chess board
  */
 public class Board {
+    private final int ROWS = 8;
+    private final int COLUMNS = 8;
     private final Square[][] squares = new Square[8][8];
     private final ArrayList<Piece> alivePiece = new ArrayList<>();
     private final ArrayList<Piece> eliminatePiece = new ArrayList<>();
-    private boolean isFinished;
 
-    public Board() {
-        this.isFinished = false;
+    private final String DEFAULT_COLOR = "White";
+    private final String[] NON_MONARCH_COLORS_FOR_BLACK = {"White", "White", "Black", "Black"};
+    private final String[] PAWN_MONARCH_COLORS_FOR_BLACK = {"White", "Black"};
+    private final String[] NON_MONARCH_COLORS_FOR_WHITE = {"Black", "Black", "White", "White"};
+    private final String[] PAWN_MONARCH_COLORS_FOR_WHITE = {"Black", "White"};
+
+
+    public Board(String side) {
 
         // Initialize empty squares
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLUMNS; col++) {
                 squares[row][col] = new Square(col, row, null);
             }
         }
 
-        String[] NonMonarchColors = {"White", "White", "Black", "Black"};
-        String[] MonarchColor = {"White", "Black"};
+        String[] NonMonarchColors = NON_MONARCH_COLORS_FOR_WHITE;
+        String[] PawnMonarchColor = PAWN_MONARCH_COLORS_FOR_WHITE;
+
+        if(!side.equals(DEFAULT_COLOR)) {
+            NonMonarchColors = NON_MONARCH_COLORS_FOR_BLACK;
+            PawnMonarchColor = PAWN_MONARCH_COLORS_FOR_BLACK;
+        }
 
         // Initialise Pawns
-        initializePawns();
+        initializePawns(PawnMonarchColor);
 
         // Initialise Knights
         int[] knightRows = {0, 0, 7, 7};
@@ -46,29 +58,22 @@ public class Board {
         // Initialise Queen
         int[] queenRows = {0, 7};
         int[] queenCols = {3, 3};
-        initializePiece("Queen", queenRows, queenCols, MonarchColor);
+        initializePiece("Queen", queenRows, queenCols, PawnMonarchColor);
 
         // Initialise King
         int[] kingRows = {0, 7};
         int[] kingCols = {4, 4};
-        initializePiece("King", kingRows, kingCols, MonarchColor);
+        initializePiece("King", kingRows, kingCols, PawnMonarchColor);
     }
 
-    public void setIsFinished(boolean isFinished) {
-        this.isFinished = isFinished;
-    }
-
-    public boolean isFinished() {
-        return isFinished;
-    }
 
     /**
      * Create Pawns on their initialised position
      */
-    private void initializePawns() {
+    private void initializePawns(String[] color) {
         for (int col = 0; col < 8; col++) {
-            squares[1][col].setPiece(new Pawn(squares[1][col], "White"));
-            squares[6][col].setPiece(new Pawn(squares[6][col], "Black"));
+            squares[1][col].setPiece(new Pawn(squares[1][col], color[0]));
+            squares[6][col].setPiece(new Pawn(squares[6][col], color[1]));
             alivePiece.add(squares[1][col].getPiece());
             alivePiece.add(squares[6][col].getPiece());
         }
@@ -128,9 +133,6 @@ public class Board {
         return eliminatePiece;
     }
 
-    public void setFinished(boolean isFinished) {
-        this.isFinished = isFinished;
-    }
     public Square[][] getSquares() {
         return squares;
     }
@@ -144,7 +146,7 @@ public class Board {
      */
     public String toString() {
         StringBuilder line = new StringBuilder();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < ROWS; i++) {
             line.append("-----");
         }
         line.append("\n");
@@ -152,8 +154,8 @@ public class Board {
         StringBuilder textBoard = new StringBuilder("|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |\n");
         textBoard.append(line);
 
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS; j++) {
                 if (j == 0) {
                     textBoard.append("|");
                 }

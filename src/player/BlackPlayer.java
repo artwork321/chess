@@ -15,4 +15,9 @@ public class BlackPlayer extends Player {
     public ArrayList<Piece> getAlivePiece() {
         return board.getAliveBlackPiece();
     }
+
+    @Override
+    public String toString() {
+        return "Black Player";
+    }
 }

@@ -9,16 +9,12 @@ import piece.Piece;
 import java.util.ArrayList;
 
 public abstract class Player {
-    private ArrayList<Move> legalMove;
     private final King king;
     protected final Board board;
-    private final boolean isInCheck;
 
     public Player(Board board) {
-        this.legalMove = new ArrayList<>();
         this.board = board;
         this.king = getKing();
-        this.isInCheck = isInCheck();
     }
 
     private King getKing() {
@@ -36,18 +32,18 @@ public abstract class Player {
     public abstract ArrayList<Piece> getAlivePiece();
 
     public boolean isInCheck() {
-        return king.isUnderAttack(getAlivePiece());
+        return king.isUnderAttack(getAlivePiece(), king.getCurrentCoordinate(), board);
+    }
+
+    public boolean isLose() {
+        return king.isKilled();
     }
 
     public void findAllLegalMove() {
-        ArrayList<Move> possibleMove = new ArrayList<>();
 
         for (Piece piece : getAlivePiece()) {
             piece.findAllNextMove(board);
-            possibleMove.addAll(piece.getAllMove());
         }
-
-        legalMove = possibleMove;
     }
 
     /**
@@ -77,11 +73,6 @@ public abstract class Player {
             // Handle first move for pawns
             if (move.getMovedPiece() instanceof Pawn && ((Pawn) move.getMovedPiece()).isFirstMove()) {
                 ((Pawn) move.getMovedPiece()).setFirstMove(false);
-            }
-
-            // Check if the move causes the game to end
-            if (king.isKilled()) {
-                board.setFinished(true);
             }
 
         }
