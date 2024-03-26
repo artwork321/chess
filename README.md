@@ -12,7 +12,7 @@ It is a two-player chess game. It is implemented based on Pseudo-legal move gene
 - Computer mode
 
 ### Demo
-![Uploading demoChess.gif…]()
+![](https://github.com/artwork321/chess/blob/main/demoChess.gif)
 
 ### Resources
 1. Images of the pieces are taken from: https://github.com/amir650/BlackWidow-Chess
